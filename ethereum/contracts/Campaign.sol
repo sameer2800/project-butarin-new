@@ -9,10 +9,11 @@ contract onlineJudge {
         owner = msg.sender;
     }
     
-    function createQuestion(string description, string publicKey) public {
-        address newQuestion = new Question( msg.sender, description , publicKey, owner);
+    function createQuestion(string description, string publicKey) public payable {
+        address newQuestion = (new Question).value(msg.value)( msg.sender, description , publicKey, owner);
         deployedQuestions.push(newQuestion);
     }
+    
     
     function getDeployedQuestions() public view returns(address[]) {
         return deployedQuestions;
@@ -30,21 +31,19 @@ contract Question {
     string public managerKey;
     string public questionDescription ;
     uint public contractValue;
-    mapping( address => string) participantsIPFS;
-    mapping(address => uint) participantsGasValue;
+    mapping( address => string) public participantsIPFS;
+    mapping(address => uint) public participantsGasValue;
+    mapping(address => string) public usernames;
     address[] public participants;
+    mapping( address => bool) participantsExists;
+
     
-    function Question(address questionManager,  string description, string publicKey, address judgeOwner ) public  {
+    function Question(address questionManager,  string description, string publicKey, address judgeOwner ) public payable  {
       
         owner = judgeOwner;
         manager = questionManager;
         managerKey = publicKey;
         questionDescription = description;
-    }
-    
-    function setContractMoney() public payable {
-        require(msg.sender == manager);
-        
     }
     
     function getManagerPublicKey() public view returns(string)  {
@@ -55,10 +54,19 @@ contract Question {
         return manager;
     }
     
-    function submitSolutionDetails(address particpant, uint gas,string hash) public {
+    function submitSolutionDetails(address particpant, string userName, uint gas,string hash) public {
         require(msg.sender == owner);
-        participantsIPFS[msg.sender] = hash;
-        participantsGasValue[msg.sender] = gas;
+        
+         if(!participantsExists[particpant] ) {
+            participants.push(particpant);
+            usernames[particpant] = userName;
+            participantsExists[particpant] = true;
+         }
+        
+        participantsIPFS[particpant] = hash;
+        participantsGasValue[particpant] = gas;
+        
+       
     }
     
     function rewardWinner(address participant) public {
@@ -80,6 +88,18 @@ contract Question {
     
     function getBalance() public view returns(uint) {
         return this.balance;
+    }
+    
+  
+    function getSummary() public view returns(address, string, uint, uint, string) {
+        return (
+            manager ,
+            questionDescription,
+            this.balance,
+            participants.length ,
+            managerKey
+            ) ;
+        
     }
     
 }

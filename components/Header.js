@@ -9,16 +9,19 @@ export default () => {
     return(
         <Menu style={ { marginTop : '10px'} }>
             <Link route="/">
-              <a className="item"> CrowdCoin </a>   
+              <a className="item"> Project Butarin</a>   
             </Link>    
-
             <Menu.Menu position='right'>
             <Link route="/">
-              <a className="item"> Campaigns </a>   
+              <a className="item"> practice </a>   
             </Link> 
-            <Link route="/campaigns/new">
-              <a className="item"> + </a>   
+            <Link route="/compete/home">
+              <a className="item"> compete </a>   
             </Link> 
+            <Link route="/leaderboard">
+              <a className="item"> leaderboard </a>   
+            </Link>
+
             </Menu.Menu>
         </Menu>
     )

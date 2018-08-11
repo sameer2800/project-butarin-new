@@ -1,11 +1,11 @@
 import web3 from './web3';
-import Campaign from './build/Campaign.json';
+import Question from './build/Question.json';
 
-const getCampaign = (address) => {
-    const instance = new web3.eth.Contract(JSON.parse(Campaign.interface) ,
+const getQuestion = (address) => {
+    const instance = new web3.eth.Contract(JSON.parse(Question.interface) ,
     address);
     return instance;
 
 }
 
-export default getCampaign;
+export default getQuestion;

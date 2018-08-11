@@ -12,7 +12,7 @@ class CampaignIndex extends Component {
 
     // this renders on server and passes props to this class on browser
     static async getInitialProps () {
-        const campaignsList =   await factory.methods.getDeployedContracts().call() ;
+        const campaignsList =   await factory.methods.getDeployedQuestions().call() ;
         return {campaignsList }
     }
 
@@ -22,8 +22,8 @@ class CampaignIndex extends Component {
             return{
                 header : address ,
                 description : ( 
-                    <Link route={`/campaigns/${address}`}>
-                        <a>View Campaign</a>
+                    <Link route={`/compete/${address}`}>
+                        <a>View Question Details</a>
                      </Link>
                  )
                  ,
@@ -40,9 +40,9 @@ class CampaignIndex extends Component {
             <div>
                 
 
-                <div>Open Campaigns </div>
+                <h3>Open Questions!!</h3>
 
-                <Link route="/campaigns/new">
+                <Link route="/compete/new">
                  <a>   
                 <Button  floated='right' content='Create Campaign' icon='add circle' primary />
                   </a>  

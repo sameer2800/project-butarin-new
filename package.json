@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "fs-extra": "^7.0.0",
     "ganache-cli": "^6.1.6",
     "mocha": "^5.2.0",

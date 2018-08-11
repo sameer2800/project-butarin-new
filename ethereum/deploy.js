@@ -17,7 +17,7 @@ const deploy = async () => {
 
   const onlineJudgeContract = await new web3.eth.Contract(JSON.parse(compiledFactory.interface)).
                       deploy( { data : '0x' + compiledFactory.bytecode}).
-                      send( {from : accounts[0] , gas : '1000000' });
+                      send( {from : accounts[0] , gas : '3000000' });
 
   // const step1 = await new web3.eth.Contract(JSON.parse(compiledFactory.interface));
 
