@@ -45,7 +45,7 @@ class QuestionShow extends Component {
             console.log("addrs show problem " +  this.props.address)
             pageDetails = <SubmitSolution  contractAddress={this.props.address}  />
         }else if(this.state.activeItem === 'leaderBoard') {
-            pageDetails = <LeaderBoard />
+            pageDetails = <LeaderBoard  contractAddress={this.props.address} participantsCount= {this.props.participantsCount} />
         }
        
 

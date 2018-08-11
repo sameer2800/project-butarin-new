@@ -46,7 +46,7 @@ class CompeteIndex extends Component {
             return{
                 key : address,
                 header : this.props.questionsDescriptions[index] ,
-                meta : "Bounty: " + web3.utils.fromWei(this.props.questionsPrice[index], 'ether') + "  Ether",
+                meta : "Prize Money: " + web3.utils.fromWei(this.props.questionsPrice[index], 'ether') + "  Ether",
                 description : ( 
                     <Link route={`/compete/${address}`}>
                         <a>View Question Details</a>
@@ -61,16 +61,17 @@ class CompeteIndex extends Component {
     }
 
     render () {
+
         return(
+
             <Layout>
             <div>
                 
-
                 <h3>Open Competitions !!</h3>
 
                 <Link route="/compete/newproblem">
                  <a>   
-                <Button  floated='right' content='Create Campaign' icon='add circle' primary />
+                <Button  floated='right' content='Create Question' icon='add circle' primary />
                   </a>  
                 </Link>
 

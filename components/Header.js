@@ -12,7 +12,7 @@ export default () => {
               <a className="item"> Project Butarin</a>   
             </Link>    
             <Menu.Menu position='right'>
-            <Link route="/">
+            <Link route="/practice/home">
               <a className="item"> practice </a>   
             </Link> 
             <Link route="/compete/home">
