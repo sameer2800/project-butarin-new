@@ -68,7 +68,7 @@ class leaderBoard extends Component {
                         <Row>
                             <HeaderCell>UserID</HeaderCell>
                             <HeaderCell>User Address</HeaderCell>
-                            <HeaderCell>Gas Consumption (best solution)</HeaderCell>
+                            <HeaderCell>Gas Used</HeaderCell>
                         </Row>
                     </Header>
 

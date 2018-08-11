@@ -36,7 +36,7 @@ class SubmitSolution extends Component {
            
         }
 
-        const url = "https://jsonplaceholder.typicode.com/posts"
+        const url = "http://localhost:9991/submit"
 
         console.log(postData);
 
