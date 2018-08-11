@@ -1,6 +1,6 @@
 import React , {Component} from 'react';
 import Layout from '../../components/Layout';
-import {Form, Button , Input, Message, Card} from 'semantic-ui-react';
+import {Form, Button , Input, Message, TextArea, Card} from 'semantic-ui-react';
 import web3 from '../../ethereum/web3';
 import OnlineJudge from '../../ethereum/factory';
 import { Link,Router } from '../../routes';
@@ -9,6 +9,7 @@ class NewProblem extends Component {
 
     state = {
         value :'' ,
+        title : '',
         description : '' ,
         publicKey : '' ,
         errorMsg : '' ,
@@ -22,7 +23,7 @@ class NewProblem extends Component {
         this.setState({loading: true, errorMsg : ''})  
         
         const accounts = await web3.eth.getAccounts();
-        await OnlineJudge.methods.createQuestion(this.state.description, this.state.publicKey).
+        await OnlineJudge.methods.createQuestion(this.state.title, this.state.description, this.state.publicKey).
         send({from:  accounts[0] , value : this.state.value});
         
         Router.pushRoute('/compete/home/');        
@@ -53,13 +54,20 @@ class NewProblem extends Component {
                 <Form.Field>
                     <label>Problem Statement</label>
                     <Input 
-                        value = {this.state.description}
-                        onChange = {event => this.setState({description : event.target.value})}
+                        value = {this.state.title}
+                        onChange = {event => this.setState({title : event.target.value})}
+                    />
+                </Form.Field>
+
+                 <Form.Field >
+                    <label>Problem Description</label>
+                    <TextArea autoHeight placeholder='Try adding multiple lines'  value={this.state.description}
+                    onChange = { event => {this.setState({description : event.target.value}) }} 
                     />
                 </Form.Field>
 
                 <Form.Field>
-                    <label>Bounty value </label>
+                    <label>Price Money </label>
                     <Input 
                         value = {this.state.value}
                         label='wei'   labelPosition='right'

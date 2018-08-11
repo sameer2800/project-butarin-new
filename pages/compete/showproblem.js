@@ -25,44 +25,14 @@ class QuestionShow extends Component {
         return {
             address : props.query.address,
             manager : getQuestionDetails[0],
-            questionDescription : getQuestionDetails[1] ,
-            balance : getQuestionDetails[2],
-            participantsCount : getQuestionDetails[3],
-            managerKey : getQuestionDetails[4],
+            questionTitle : getQuestionDetails[1],
+            questionDescription : getQuestionDetails[2] ,
+            balance : getQuestionDetails[3],
+            participantsCount : getQuestionDetails[4],
+            managerKey : getQuestionDetails[5],
            
            
         };
-    }
-
-    renderCards() {
-        const items = [
-            {
-                header : this.props.manager ,
-                meta : 'Address of Manager' ,
-                description : 'Manager created this question',
-                style : {overflowWrap: 'break-word'}
-            },
-            {
-                header : this.props.balance ,
-                meta : 'Bounty (ether)' ,
-                description : 'Solution with lowest transaction gas receives this bounty',
-                style : {overflowWrap: 'break-word'}
-            },
-            {
-                header : this.props.participantsCount ,
-                meta : 'Number of contributors' ,
-                description : 'Number of contributors who already contributed to this campaign',
-                style : {overflowWrap: 'break-word'}
-            },
-            {
-                header : web3.utils.fromWei(this.props.balance, 'ether') ,
-                meta : 'Campaign Balance (ether)' ,
-                description : 'This balance shows how much money is left with contract to spend',
-                style : {overflowWrap: 'break-word'}
-            }
-        ]
-
-        return ( <Card.Group items={items} />  );
     }
 
     render() {
@@ -81,12 +51,12 @@ class QuestionShow extends Component {
 
         return ( 
         <Layout>
-            <h3> {this.props.questionDescription}</h3>
+            <h3> {this.props.questionTitle}</h3>
             
             <List celled horizontal>
-                <List.Item>  Bounty : { web3.utils.fromWei(this.props.balance, 'ether') }     ether </List.Item>
-                <List.Item>Total Solution submitted : {this.props.participantsCount} </List.Item>
-                <List.Item>Manager address : {this.props.manager }   </List.Item>
+                <List.Item>  price money :  <strong>{ web3.utils.fromWei(this.props.balance, 'ether') }  </strong>   ether </List.Item>
+                <List.Item>Total Solution submitted : <strong> {this.props.participantsCount} </strong> </List.Item>
+                <List.Item>Manager address : <strong> {this.props.manager }  </strong>  </List.Item>
             </List> 
             
             

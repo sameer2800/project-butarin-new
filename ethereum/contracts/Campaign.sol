@@ -9,8 +9,8 @@ contract onlineJudge {
         owner = msg.sender;
     }
     
-    function createQuestion(string description, string publicKey) public payable {
-        address newQuestion = (new Question).value(msg.value)( msg.sender, description , publicKey, owner);
+    function createQuestion(string title, string description, string publicKey) public payable {
+        address newQuestion = (new Question).value(msg.value)( msg.sender, title, description , publicKey, owner);
         deployedQuestions.push(newQuestion);
     }
     
@@ -29,44 +29,44 @@ contract Question {
     address public manager;
     address public owner ;
     string public managerKey;
-    string public questionDescription ;
-    uint public contractValue;
-    mapping( address => string) public participantsIPFS;
-    mapping(address => uint) public participantsGasValue;
-    mapping(address => string) public usernames;
+    string public questionTitle;
+    string public questionDescription;
+
+    struct Participant {
+        string username;
+        string solutionHash;
+        uint gasUsed;
+    }
+    
     address[] public participants;
-    mapping( address => bool) participantsExists;
+    mapping( address => bool) participantExists;
+    mapping(address => Participant) addressToParticipant;
 
     
-    function Question(address questionManager,  string description, string publicKey, address judgeOwner ) public payable  {
-      
+    function Question(address questionManager,  string title, string description,  string publicKey, address judgeOwner ) public payable  {
         owner = judgeOwner;
         manager = questionManager;
         managerKey = publicKey;
         questionDescription = description;
+        questionTitle = title;
     }
     
-    function getManagerPublicKey() public view returns(string)  {
-        return managerKey;
-    }
-    
-    function getManagerAddress() public view returns(address)  {
-        return manager;
-    }
-    
-    function submitSolutionDetails(address particpant, string userName, uint gas,string hash) public {
+
+    function submitSolutionDetails(address particpantAddress, string username, uint gasUsed, string ipfsHash) public {
         require(msg.sender == owner);
-        
-         if(!participantsExists[particpant] ) {
-            participants.push(particpant);
-            usernames[particpant] = userName;
-            participantsExists[particpant] = true;
+        Participant memory participant;
+
+        if(participantExists[particpantAddress] ) {
+            participant = addressToParticipant[particpantAddress];
+        } else {
+            participant = Participant({
+                username: username,
+                solutionHash: ipfsHash,
+                gasUsed: gasUsed
+            });
          }
-        
-        participantsIPFS[particpant] = hash;
-        participantsGasValue[particpant] = gas;
-        
-       
+         addressToParticipant[particpantAddress] = participant;
+         participants.push(particpantAddress);
     }
     
     function rewardWinner(address participant) public {
@@ -74,26 +74,25 @@ contract Question {
         participant.transfer(this.balance);
     }
     
-    function getParticipant(uint index) public view returns(address) {
-        return participants[index];
+    function getParticipantDetails(address participantAddress) public view returns(string, string, uint) {
+        Participant participant = addressToParticipant[participantAddress];
+        return (participant.username, participant.solutionHash, participant.gasUsed);
     }
     
     function getQuestionDescription() public view returns (string) {
         return questionDescription;
     }
     
-    function getContractValue() public view returns(uint) {
-        return contractValue;
-    }
     
     function getBalance() public view returns(uint) {
         return this.balance;
     }
     
   
-    function getSummary() public view returns(address, string, uint, uint, string) {
+    function getSummary() public view returns(address, string, string, uint, uint, string) {
         return (
             manager ,
+            questionTitle,
             questionDescription,
             this.balance,
             participants.length ,
