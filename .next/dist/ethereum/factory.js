@@ -17,7 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Created by kbr0003 on 28/07/18.
  */
-var instance = new _web2.default.eth.Contract(JSON.parse(_onlineJudge2.default.interface), '0xbdbd66a7cec1e9d2e2451b9de78bb1a5b3001cd5');
+var instance = new _web2.default.eth.Contract(JSON.parse(_onlineJudge2.default.interface), '0x6b2b2428f17cc6ebef27a4386affacf971f6b1ef');
 
 exports.default = instance;
 //# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV0aGVyZXVtL2ZhY3RvcnkuanMiXSwibmFtZXMiOlsid2ViMyIsIkNhbXBhZ2luRmFjdG9yeSIsImluc3RhbmNlIiwiZXRoIiwiQ29udHJhY3QiLCJKU09OIiwicGFyc2UiLCJpbnRlcmZhY2UiXSwibWFwcGluZ3MiOiI7Ozs7OztBQUdBLEFBQU8sQUFBVTs7OztBQUNqQixBQUFPLEFBQXFCOzs7Ozs7QUFKNUI7OztBQU1BLElBQU0sV0FBVyxJQUFJLGNBQUEsQUFBSyxJQUFULEFBQWEsU0FBUyxLQUFBLEFBQUssTUFBTSxzQkFBakMsQUFBc0IsQUFBMkIsWUFBbEUsQUFBaUIsQUFDYixBQUVKOztrQkFBQSxBQUFlIiwiZmlsZSI6ImZhY3RvcnkuanMiLCJzb3VyY2VSb290IjoiL1VzZXJzL2ticjAwMDMvRG9jdW1lbnRzL2V0aGVyZXVtLWJsb2NrY2hhaW4vb25saW5lSnVkZ2UifQ==

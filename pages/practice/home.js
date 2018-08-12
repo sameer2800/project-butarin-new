@@ -76,7 +76,7 @@ class PracticeIndex extends Component {
 
             <Layout>
             <div>
-                <h3>Live Competetions</h3>
+                <h3>Practice Questions</h3>
                 <Image size='large' src={'http://localhost:9991/static/space.svg'} fluid centered />
 
                 <Link route="/compete/newproblem">

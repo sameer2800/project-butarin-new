@@ -3,8 +3,19 @@ pragma solidity ^0.4.17;
 
 contract onlineJudge {
     address[] public deployedQuestions;
-    address public owner ;
+    address public owner;
+    address public tokenContractAddress;
+    mapping(address => uint) public addressToTokens;
+    address[] public tokenHolders;
     
+    function updateTokenCount(address user) public {
+        require(msg.sender == owner);
+        if(addressToTokens[user] == 0) {
+            tokenHolders.push(user);
+        }
+        addressToTokens[user] = addressToTokens[user] + 1;
+    }
+        
     function onlineJudge() public {
         owner = msg.sender;
     }
@@ -21,6 +32,10 @@ contract onlineJudge {
     
     function getBalance() public view returns(uint) {
         return this.balance;
+    }
+    
+    function getTokenHolders() public view returns(address[]) {
+        return tokenHolders;
     }
     
 }
@@ -64,9 +79,10 @@ contract Question {
                 solutionHash: ipfsHash,
                 gasUsed: gasUsed
             });
+            participants.push(particpantAddress);
+
          }
          addressToParticipant[particpantAddress] = participant;
-         participants.push(particpantAddress);
     }
     
     function rewardWinner(address participant) public {

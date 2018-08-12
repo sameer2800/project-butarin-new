@@ -10,7 +10,7 @@ import SubmitSolution from './submitSolution';
 
 class QuestionShow extends Component {
 
-    state = { activeItem: 'leaderBoard' }
+    state = { activeItem: 'description' }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -30,7 +30,7 @@ class QuestionShow extends Component {
             balance : getQuestionDetails[3],
             participantsCount : getQuestionDetails[4],
             managerKey : getQuestionDetails[5],
-           
+            
            
         };
     }
@@ -57,6 +57,7 @@ class QuestionShow extends Component {
                 <List.Item>  price money :  <strong>{ web3.utils.fromWei(this.props.balance, 'ether') }  </strong>   ether </List.Item>
                 <List.Item>Total Solution submitted : <strong> {this.props.participantsCount} </strong> </List.Item>
                 <List.Item>Manager address : <strong> {this.props.manager }  </strong>  </List.Item>
+                <List.Item>Question address : <strong> {this.props.address }  </strong>  </List.Item>
             </List> 
             
             

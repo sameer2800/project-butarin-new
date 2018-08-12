@@ -32,7 +32,7 @@ exports.default = function () {
       fileName: _jsxFileName,
       lineNumber: 12
     }
-  }, ' Project Butarin')), _react2.default.createElement(_semanticUiReact.Menu.Menu, { position: 'right', __source: {
+  }, ' Project Buterin')), _react2.default.createElement(_semanticUiReact.Menu.Menu, { position: 'right', __source: {
       fileName: _jsxFileName,
       lineNumber: 14
     }
