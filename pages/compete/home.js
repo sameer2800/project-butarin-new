@@ -17,40 +17,54 @@ class CompeteIndex extends Component {
     static async getInitialProps () {
         const questionsListAddress =   await factory.methods.getDeployedQuestions().call() ;
 
-        var questionsDescriptions = [];
+        var questionsTitles = [];
         var questionsPrice =[];
         
         for(var i = 0; i < questionsListAddress.length; i++) {
             const question = GetQuestion(questionsListAddress[i]);
-            const description = await question.methods.getQuestionDescription().call();
-            questionsDescriptions.push(description);
+            const summaryDetails = await question.methods.getSummary().call();
+          //  const balance = await question.methods.getBalance().call();
+          questionsTitles.push(summaryDetails[1]);
+            questionsPrice.push(summaryDetails[3]);
         }
 
-        for(var i = 0; i < questionsListAddress.length; i++) {
-            const question = GetQuestion(questionsListAddress[i]);
-            const balance = await question.methods.getBalance().call();
-            questionsPrice.push(balance);
-        }
+        // for(var i = 0; i < questionsListAddress.length; i++) {
+        //     const question = GetQuestion(questionsListAddress[i]);
+        //     const balance = await question.methods.getBalance().call();
+        //     questionsPrice.push(balance);
+        // }
         
-        return {questionsListAddress, questionsDescriptions , questionsPrice }
+        return {questionsListAddress, questionsTitles , questionsPrice }
     }
 
 
     renderCampaigns = () => {
 
-        this.props.questionsDescriptions.map ( val => {
+        this.props.questionsTitles.map ( val => {
             console.log("question " + val);
         } )
 
-        console.log( this.props.questionsDescriptions[1])
-        const items = this.props.questionsListAddress.map((address , index) => {
+        console.log( this.props.questionsTitles[1])
+
+        var  filteredAddressIndexes = [];
+
+        for(var i =0;i < this.props.questionsListAddress.length; i++) {
+          //  console.log(this.props.questionsPrice[i])
+            if(this.props.questionsPrice[i] !== '0'){
+                filteredAddressIndexes.push(i)
+            }
+                  
+        }  
+
+
+        const items = filteredAddressIndexes.map((index) => {
             return{
-                key : address,
-                header : this.props.questionsDescriptions[index] ,
+                key : index,
+                header : this.props.questionsTitles[index] ,
                 meta : "Prize Money: " + web3.utils.fromWei(this.props.questionsPrice[index], 'ether') + "  Ether",
                 description : ( 
-                    <Link route={`/compete/${address}`}>
-                        <a>View Question Details</a>
+                    <Link route={`/compete/${this.props.questionsListAddress[index]}`}>
+                        <a>View Question Details </a>
                      </Link>
                  )
                  ,

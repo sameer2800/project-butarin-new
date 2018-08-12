@@ -76,9 +76,7 @@ var leaderBoard = function (_Component) {
         }
 
         return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = leaderBoard.__proto__ || (0, _getPrototypeOf2.default)(leaderBoard)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            participants: [],
-            usernames: [],
-            gas: []
+            userDetails: []
         }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
     }
 
@@ -86,54 +84,56 @@ var leaderBoard = function (_Component) {
         key: 'componentDidMount',
         value: function () {
             var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-                var question, participantsAddress, users, gasUsed, i, address, getparticipantdetails;
+                var question, userDetails, i, address, getparticipantdetails, userDetail;
                 return _regenerator2.default.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 console.log("question address " + this.props.contractAddress);
                                 question = (0, _campaign2.default)(this.props.contractAddress);
-                                participantsAddress = [];
-                                users = [];
-                                gasUsed = [];
+                                userDetails = [];
                                 i = 0;
 
-                            case 6:
+                            case 4:
                                 if (!(i < this.props.participantsCount)) {
-                                    _context.next = 20;
+                                    _context.next = 17;
                                     break;
                                 }
 
-                                _context.next = 9;
+                                _context.next = 7;
                                 return question.methods.participants(i).call();
 
-                            case 9:
+                            case 7:
                                 address = _context.sent;
 
                                 console.log("adresss of participants " + address);
-                                _context.next = 13;
+                                _context.next = 11;
                                 return question.methods.getParticipantDetails(address).call();
 
-                            case 13:
+                            case 11:
                                 getparticipantdetails = _context.sent;
+                                userDetail = {
+                                    address: address,
+                                    username: getparticipantdetails[0],
+                                    gasUsed: getparticipantdetails[2]
+                                };
 
-                                participantsAddress.push(address);
-                                users.push(getparticipantdetails[0]);
-                                gasUsed.push(getparticipantdetails[2]);
+                                userDetails.push(userDetail);
 
-                            case 17:
+                            case 14:
                                 i++;
-                                _context.next = 6;
+                                _context.next = 4;
                                 break;
 
-                            case 20:
+                            case 17:
 
-                                this.setState({ participants: participantsAddress,
-                                    usernames: users,
-                                    gas: gasUsed
+                                console.log(userDetails);
+
+                                this.setState({
+                                    userDetails: userDetails
                                 });
 
-                            case 21:
+                            case 19:
                             case 'end':
                                 return _context.stop();
                         }
@@ -150,36 +150,36 @@ var leaderBoard = function (_Component) {
     }, {
         key: 'renderRows',
         value: function renderRows() {
-            var _this2 = this;
-
             var Header = _semanticUiReact.Table.Header,
                 Row = _semanticUiReact.Table.Row,
                 HeaderCell = _semanticUiReact.Table.HeaderCell,
                 Body = _semanticUiReact.Table.Body,
                 Cell = _semanticUiReact.Table.Cell;
 
-            return this.state.participants.map(function (address, index) {
-                return _react2.default.createElement(Row, {
-                    __source: {
+            return this.state.userDetails.sort(function (a, b) {
+                return a.gasUsed > b.gasUsed;
+            }).map(function (user, index) {
+                console.log(user);
+                return _react2.default.createElement(Row, { key: index, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 51
+                        lineNumber: 54
                     }
                 }, _react2.default.createElement(Cell, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 52
+                        lineNumber: 56
                     }
-                }, ' ', _this2.state.usernames[index]), _react2.default.createElement(Cell, {
+                }, ' ', user.username), _react2.default.createElement(Cell, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 53
+                        lineNumber: 57
                     }
-                }, ' ', address, ' '), _react2.default.createElement(Cell, {
+                }, ' ', user.address, ' '), _react2.default.createElement(Cell, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 54
+                        lineNumber: 58
                     }
-                }, ' ', _this2.state.gas[index], ' '));
+                }, ' ', user.gasUsed, ' '));
             });
         }
     }, {
@@ -190,41 +190,40 @@ var leaderBoard = function (_Component) {
                 HeaderCell = _semanticUiReact.Table.HeaderCell,
                 Body = _semanticUiReact.Table.Body;
 
-            console.log("leaderboard  " + this.props.getParticipants);
             return _react2.default.createElement(_semanticUiReact.Table, {
-                __source: {
-                    fileName: _jsxFileName,
-                    lineNumber: 66
-                }
-            }, _react2.default.createElement(Header, {
-                __source: {
-                    fileName: _jsxFileName,
-                    lineNumber: 67
-                }
-            }, _react2.default.createElement(Row, {
-                __source: {
-                    fileName: _jsxFileName,
-                    lineNumber: 68
-                }
-            }, _react2.default.createElement(HeaderCell, {
-                __source: {
-                    fileName: _jsxFileName,
-                    lineNumber: 69
-                }
-            }, 'UserID'), _react2.default.createElement(HeaderCell, {
                 __source: {
                     fileName: _jsxFileName,
                     lineNumber: 70
                 }
-            }, 'User Address'), _react2.default.createElement(HeaderCell, {
+            }, _react2.default.createElement(Header, {
                 __source: {
                     fileName: _jsxFileName,
                     lineNumber: 71
                 }
-            }, 'Gas Consumption (best solution)'))), _react2.default.createElement(Body, {
+            }, _react2.default.createElement(Row, {
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 72
+                }
+            }, _react2.default.createElement(HeaderCell, {
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 73
+                }
+            }, 'UserID'), _react2.default.createElement(HeaderCell, {
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 74
+                }
+            }, 'User Address'), _react2.default.createElement(HeaderCell, {
                 __source: {
                     fileName: _jsxFileName,
                     lineNumber: 75
+                }
+            }, 'Gas Used'))), _react2.default.createElement(Body, {
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 79
                 }
             }, this.renderRows()));
         }
@@ -234,4 +233,4 @@ var leaderBoard = function (_Component) {
 }(_react.Component);
 
 exports.default = leaderBoard;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzL2NvbXBldGUvbGVhZGVyQm9hcmQuanMiXSwibmFtZXMiOlsiUmVhY3QiLCJDb21wb25lbnQiLCJMYXlvdXQiLCJHZXRRdWVzdGlvbiIsIkNhcmQiLCJCdXR0b24iLCJHcmlkIiwiRGl2aWRlciIsIkNvbnRhaW5lciIsIkxpc3QiLCJNZW51IiwiVGFibGUiLCJ3ZWIzIiwiQ29udHJpYnV0ZUZvcm0iLCJMaW5rIiwibGVhZGVyQm9hcmQiLCJzdGF0ZSIsInBhcnRpY2lwYW50cyIsInVzZXJuYW1lcyIsImdhcyIsImNvbnNvbGUiLCJsb2ciLCJwcm9wcyIsImNvbnRyYWN0QWRkcmVzcyIsInF1ZXN0aW9uIiwicGFydGljaXBhbnRzQWRkcmVzcyIsInVzZXJzIiwiZ2FzVXNlZCIsImkiLCJwYXJ0aWNpcGFudHNDb3VudCIsIm1ldGhvZHMiLCJjYWxsIiwiYWRkcmVzcyIsImdldFBhcnRpY2lwYW50RGV0YWlscyIsImdldHBhcnRpY2lwYW50ZGV0YWlscyIsInB1c2giLCJzZXRTdGF0ZSIsIkhlYWRlciIsIlJvdyIsIkhlYWRlckNlbGwiLCJCb2R5IiwiQ2VsbCIsIm1hcCIsImluZGV4IiwiZ2V0UGFydGljaXBhbnRzIiwicmVuZGVyUm93cyJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLEFBQU8sQUFBUzs7OztBQUNoQixBQUFPLEFBQVk7Ozs7QUFDbkIsQUFBTyxBQUFpQjs7OztBQUN4QixBQUFRLEFBQU8sQUFBUyxBQUFNLEFBQVUsQUFBWSxBQUFPLEFBQU87O0FBQ2xFLEFBQU8sQUFBVTs7OztBQUNqQixBQUFPLEFBQW9COzs7O0FBQzNCLEFBQVEsQUFBVzs7Ozs7OztJLEFBR2I7Ozs7Ozs7Ozs7Ozs7OzBOQUVGLEE7MEJBQVEsQUFDVyxBQUNmO3VCQUZJLEFBRVEsQUFDWjtpQixBQUhJLEFBR0U7QUFIRixBQUNKOzs7Ozs7Ozs7OztpQ0FNQTt3Q0FBQSxBQUFRLElBQUksc0JBQXNCLEtBQUEsQUFBSyxNQUF2QyxBQUE2QyxBQUN2QztBLDJDQUFXLHdCQUFZLEtBQUEsQUFBSyxNQUFqQixBQUF1QixBLEFBRWxDO0Esc0RBQXNCLEFBQ3RCLEE7QSx3QyxBQUFRLEFBQ1I7QSwwQ0FBVSxBLEFBRVQ7QSxvQyxBQUFHOzs7c0NBQUcsSUFBSSxLQUFBLEFBQUssTUFBTSxBOzs7Ozs7dUNBQ04sU0FBQSxBQUFTLFFBQVQsQUFBaUIsYUFBakIsQUFBOEIsRyxBQUE5QixBQUFpQzs7aUNBQWpEO0EsbURBQ047O3dDQUFBLEFBQVEsSUFBSyw2QkFBYixBQUEwQzs7dUNBQ04sU0FBQSxBQUFTLFFBQVQsQUFBaUIsc0JBQWpCLEFBQXVDLFMsQUFBdkMsQUFBZ0Q7O2lDQUE5RTtBLGlFQUNOOztvREFBQSxBQUFvQixLQUFwQixBQUF5QixBQUN6QjtzQ0FBQSxBQUFNLEtBQUssc0JBQVgsQUFBVyxBQUFzQixBQUNqQzt3Q0FBQSxBQUFRLEtBQUssc0JBQWIsQUFBYSxBQUFzQjs7aUNBTlk7QTs7OztpQ0FXaEQ7O3FDQUFBLEFBQUssV0FBVSxjQUFELEFBQWdCLEFBQ3pCOytDQURTLEFBQ0csQUFDWjt5Q0FGTCxBQUFjLEFBRUg7QUFGRzs7Ozs7Ozs7Ozs7Ozs7Ozs7O3FDQVFKO3lCQUFBOztnQkFBQSxBQUVELFNBRkMsQUFFc0MsdUJBRnRDLEFBRUQ7Z0JBRkMsQUFFTyxNQUZQLEFBRXNDLHVCQUZ0QyxBQUVPO2dCQUZQLEFBRVksYUFGWixBQUVzQyx1QkFGdEMsQUFFWTtnQkFGWixBQUV3QixPQUZ4QixBQUVzQyx1QkFGdEMsQUFFd0I7Z0JBRnhCLEFBRThCLE9BRjlCLEFBRXNDLHVCQUZ0QyxBQUU4QixBQUV2Qzs7d0JBQU8sQUFBSyxNQUFMLEFBQVcsYUFBWCxBQUF3QixJQUFLLFVBQUEsQUFBQyxTQUFELEFBQVMsT0FBVyxBQUNwRDt1Q0FDTSxjQUFEOztrQ0FBQTtvQ0FBQSxBQUNEO0FBREM7QUFBQSxpQkFBQSxrQkFDQSxjQUFEOztrQ0FBQTtvQ0FBQTtBQUFBO0FBQUEsbUJBQVEsWUFBQSxBQUFLLE1BQUwsQUFBVyxVQURsQixBQUNELEFBQVEsQUFBcUIsQUFDN0IseUJBQUMsY0FBRDs7a0NBQUE7b0NBQUE7QUFBQTtBQUFBLG1CQUFRLEtBQVIsU0FGQyxBQUVELEFBQ0Esc0JBQUMsY0FBRDs7a0NBQUE7b0NBQUE7QUFBQTtBQUFBLG1CQUFRLFlBQUEsQUFBSyxNQUFMLEFBQVcsSUFBbkIsQUFBUSxBQUFlLFFBSjNCLEFBQ0ssQUFHRCxBQUVQO0FBUEQsQUFBTyxBQVFWLGFBUlU7Ozs7aUNBVUY7Z0JBQUEsQUFFRyxTQUZILEFBRW9DLHVCQUZwQyxBQUVHO2dCQUZILEFBRVcsTUFGWCxBQUVvQyx1QkFGcEMsQUFFVztnQkFGWCxBQUVnQixhQUZoQixBQUVvQyx1QkFGcEMsQUFFZ0I7Z0JBRmhCLEFBRTRCLE9BRjVCLEFBRW9DLHVCQUZwQyxBQUU0QixBQUVqQzs7b0JBQUEsQUFBUSxJQUFJLGtCQUFrQixLQUFBLEFBQUssTUFBbkMsQUFBeUMsQUFDekM7bUNBRUksQUFBQzs7OEJBQUQ7Z0NBQUEsQUFDUTtBQURSO0FBQUEsYUFBQSxrQkFDUyxjQUFEOzs4QkFBQTtnQ0FBQSxBQUNJO0FBREo7QUFBQSwrQkFDSyxjQUFEOzs4QkFBQTtnQ0FBQSxBQUNJO0FBREo7QUFBQSwrQkFDSyxjQUFEOzs4QkFBQTtnQ0FBQTtBQUFBO0FBQUEsZUFESixBQUNJLEFBQ0EsMkJBQUMsY0FBRDs7OEJBQUE7Z0NBQUE7QUFBQTtBQUFBLGVBRkosQUFFSSxBQUNBLGlDQUFDLGNBQUQ7OzhCQUFBO2dDQUFBO0FBQUE7QUFBQSxlQUxoQixBQUNRLEFBQ0ksQUFHSSxBQUlSLHNEQUFDLGNBQUQ7OzhCQUFBO2dDQUFBLEFBQ0s7QUFETDtBQUFBLG9CQVhaLEFBRUksQUFTUSxBQUNLLEFBQUssQUFNekI7Ozs7O0FBeEVxQixBLEFBNEUxQjs7a0JBQUEsQUFBZSIsImZpbGUiOiJsZWFkZXJCb2FyZC5qcyIsInNvdXJjZVJvb3QiOiIvVXNlcnMva2JyMDAwMy9Eb2N1bWVudHMvZXRoZXJldW0tYmxvY2tjaGFpbi9vbmxpbmVKdWRnZSJ9
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzL2NvbXBldGUvbGVhZGVyQm9hcmQuanMiXSwibmFtZXMiOlsiUmVhY3QiLCJDb21wb25lbnQiLCJMYXlvdXQiLCJHZXRRdWVzdGlvbiIsIkNhcmQiLCJCdXR0b24iLCJHcmlkIiwiRGl2aWRlciIsIkNvbnRhaW5lciIsIkxpc3QiLCJNZW51IiwiVGFibGUiLCJ3ZWIzIiwiQ29udHJpYnV0ZUZvcm0iLCJMaW5rIiwibGVhZGVyQm9hcmQiLCJzdGF0ZSIsInVzZXJEZXRhaWxzIiwiY29uc29sZSIsImxvZyIsInByb3BzIiwiY29udHJhY3RBZGRyZXNzIiwicXVlc3Rpb24iLCJpIiwicGFydGljaXBhbnRzQ291bnQiLCJtZXRob2RzIiwicGFydGljaXBhbnRzIiwiY2FsbCIsImFkZHJlc3MiLCJnZXRQYXJ0aWNpcGFudERldGFpbHMiLCJnZXRwYXJ0aWNpcGFudGRldGFpbHMiLCJ1c2VyRGV0YWlsIiwidXNlcm5hbWUiLCJnYXNVc2VkIiwicHVzaCIsInNldFN0YXRlIiwiSGVhZGVyIiwiUm93IiwiSGVhZGVyQ2VsbCIsIkJvZHkiLCJDZWxsIiwic29ydCIsImEiLCJiIiwibWFwIiwidXNlciIsImluZGV4IiwicmVuZGVyUm93cyJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLEFBQU8sQUFBUzs7OztBQUNoQixBQUFPLEFBQVk7Ozs7QUFDbkIsQUFBTyxBQUFpQjs7OztBQUN4QixBQUFRLEFBQU8sQUFBUyxBQUFNLEFBQVUsQUFBWSxBQUFPLEFBQU87O0FBQ2xFLEFBQU8sQUFBVTs7OztBQUNqQixBQUFPLEFBQW9COzs7O0FBQzNCLEFBQVEsQUFBVzs7Ozs7OztJLEFBR2I7Ozs7Ozs7Ozs7Ozs7OzBOLEFBRUY7eUIsQUFBUSxBQUNVO0FBRFYsQUFDSjs7Ozs7Ozs7Ozs7aUNBSUE7d0NBQUEsQUFBUSxJQUFJLHNCQUFzQixLQUFBLEFBQUssTUFBdkMsQUFBNkMsQUFDdkM7QSwyQ0FBVyx3QkFBWSxLQUFBLEFBQUssTUFBakIsQUFBdUIsQUFHbEMsQTtBLDhDQUFjLEEsQUFFYjtBLG9DLEFBQUc7OztzQ0FBRyxJQUFJLEtBQUEsQUFBSyxNLEFBQU07Ozs7Ozt1Q0FDTixTQUFBLEFBQVMsUUFBVCxBQUFpQixhQUFqQixBQUE4QixHQUE5QixBQUFpQyxBOztpQ0FBakQ7QSxtREFDTjs7d0NBQUEsQUFBUSxJQUFLLDZCQUFiLEFBQTBDOzt1Q0FDTixTQUFBLEFBQVMsUUFBVCxBQUFpQixzQkFBakIsQUFBdUMsU0FBdkMsQUFBZ0QsQTs7aUNBQTlFO0EsaUVBRUE7QTs2Q0FBYSxBQUNMLEFBQ1Y7OENBQVcsc0JBRkksQUFFSixBQUFzQixBQUNqQzs2Q0FBVSxzQkFISyxBQUdMLEEsQUFBc0IsQUFHcEM7QUFObUIsQUFDZjs7NENBS0osQUFBWSxLQUFaLEFBQWlCOztpQ0FYOEI7QTs7OztpQ0FjaEQ7O3dDQUFBLEFBQVEsSUFBUixBQUFZLEFBRVo7O3FDQUFBLEFBQUs7aURBQUwsQUFBYyxBQUNLO0FBREwsQUFDVDs7Ozs7Ozs7Ozs7Ozs7Ozs7O3FDQU1LO2dCQUFBLEFBRUQsU0FGQyxBQUVzQyx1QkFGdEMsQUFFRDtnQkFGQyxBQUVPLE1BRlAsQUFFc0MsdUJBRnRDLEFBRU87Z0JBRlAsQUFFWSxhQUZaLEFBRXNDLHVCQUZ0QyxBQUVZO2dCQUZaLEFBRXdCLE9BRnhCLEFBRXNDLHVCQUZ0QyxBQUV3QjtnQkFGeEIsQUFFOEIsT0FGOUIsQUFFc0MsdUJBRnRDLEFBRThCLEFBR3ZDOzt3QkFBTyxBQUFLLE1BQUwsQUFBVyxZQUFYLEFBQXVCLEtBQUssVUFBQSxBQUFDLEdBQUQsQUFBSSxHQUFKO3VCQUFVLEVBQUEsQUFBRSxVQUFVLEVBQXRCLEFBQXdCO0FBQXBELGFBQUEsRUFBQSxBQUE2RCxJQUFLLFVBQUEsQUFBQyxNQUFELEFBQU0sT0FBVyxBQUN0Rjt3QkFBQSxBQUFRLElBQVIsQUFBWSxBQUNaO3VDQUNNLGNBQUQsT0FBSyxLQUFMLEFBQVU7a0NBQVY7b0NBQUEsQUFFRDtBQUZDO2lCQUFBLGtCQUVBLGNBQUQ7O2tDQUFBO29DQUFBO0FBQUE7QUFBQSxtQkFBUSxVQUZQLEFBRUQsQUFBYSxBQUNiLDJCQUFDLGNBQUQ7O2tDQUFBO29DQUFBO0FBQUE7QUFBQSxtQkFBUSxVQUFSLEFBQWEsU0FIWixBQUdELEFBQ0Esc0JBQUMsY0FBRDs7a0NBQUE7b0NBQUE7QUFBQTtBQUFBLG1CQUFRLFVBQVIsQUFBYSxTQUxqQixBQUNLLEFBSUQsQUFFUDtBQVRELEFBQU8sQUFXVjs7OztpQ0FFUTtnQkFBQSxBQUVHLFNBRkgsQUFFb0MsdUJBRnBDLEFBRUc7Z0JBRkgsQUFFVyxNQUZYLEFBRW9DLHVCQUZwQyxBQUVXO2dCQUZYLEFBRWdCLGFBRmhCLEFBRW9DLHVCQUZwQyxBQUVnQjtnQkFGaEIsQUFFNEIsT0FGNUIsQUFFb0MsdUJBRnBDLEFBRTRCLEFBRWpDOzttQ0FFSSxBQUFDOzs4QkFBRDtnQ0FBQSxBQUNRO0FBRFI7QUFBQSxhQUFBLGtCQUNTLGNBQUQ7OzhCQUFBO2dDQUFBLEFBQ0k7QUFESjtBQUFBLCtCQUNLLGNBQUQ7OzhCQUFBO2dDQUFBLEFBQ0k7QUFESjtBQUFBLCtCQUNLLGNBQUQ7OzhCQUFBO2dDQUFBO0FBQUE7QUFBQSxlQURKLEFBQ0ksQUFDQSwyQkFBQyxjQUFEOzs4QkFBQTtnQ0FBQTtBQUFBO0FBQUEsZUFGSixBQUVJLEFBQ0EsaUNBQUMsY0FBRDs7OEJBQUE7Z0NBQUE7QUFBQTtBQUFBLGVBTGhCLEFBQ1EsQUFDSSxBQUdJLEFBSVIsK0JBQUMsY0FBRDs7OEJBQUE7Z0NBQUEsQUFDSztBQURMO0FBQUEsb0JBWFosQUFFSSxBQVNRLEFBQ0ssQUFBSyxBQU16Qjs7Ozs7QUE1RXFCLEEsQUFnRjFCOztrQkFBQSxBQUFlIiwiZmlsZSI6ImxlYWRlckJvYXJkLmpzIiwic291cmNlUm9vdCI6Ii9Vc2Vycy9rYnIwMDAzL0RvY3VtZW50cy9ldGhlcmV1bS1ibG9ja2NoYWluL29ubGluZUp1ZGdlIn0=

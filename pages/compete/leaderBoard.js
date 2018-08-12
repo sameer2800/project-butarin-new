@@ -9,34 +9,35 @@ import {Link} from '../../routes';
 
 class leaderBoard extends Component {
 
-    state = {
-        participants : [] ,
-        usernames : [],
-        gas : []
+    state = {       
+        userDetails : []
     }
     
     async componentDidMount () {
         console.log("question address " + this.props.contractAddress )
         const question = GetQuestion(this.props.contractAddress);
 
-        const participantsAddress = [];
-        const users = [];
-        const gasUsed = [];
+       
+        const userDetails = [];
 
        for(var i =0; i < this.props.participantsCount; i++) {
         const address = await question.methods.participants(i).call();
         console.log( "adresss of participants " + address);
         const getparticipantdetails = await question.methods.getParticipantDetails(address).call();
-        participantsAddress.push(address);
-        users.push(getparticipantdetails[0]);
-        gasUsed.push(getparticipantdetails[2]);
+       
+        const userDetail = {
+            address : address,
+            username : getparticipantdetails[0],
+            gasUsed : getparticipantdetails[2]
+        }
 
-        
+        userDetails.push(userDetail);
        }
 
-       this.setState({participants : participantsAddress,
-            usernames : users,
-            gas : gasUsed
+       console.log(userDetails);
+
+       this.setState({
+            userDetails : userDetails
     }) 
       
         
@@ -46,21 +47,24 @@ class leaderBoard extends Component {
 
         const { Header, Row, HeaderCell, Body, Cell} = Table;
 
-        return this.state.participants.map( (address,index ) => {
+
+        return this.state.userDetails.sort((a, b) => a.gasUsed > b.gasUsed).map( (user,index ) => {
+            console.log(user)
             return (
-                 <Row>
-                <Cell> {this.state.usernames[index]}</Cell>
-                <Cell> {address} </Cell>
-                <Cell> {this.state.gas[index]} </Cell>
+                 <Row key={index}>
+                  
+                <Cell> {user.username}</Cell>
+                <Cell> {user.address} </Cell>
+                <Cell> {user.gasUsed} </Cell>
             </Row>) 
         })
+
     }
 
     render() {
 
         const { Header, Row, HeaderCell, Body} = Table;
 
-        console.log("leaderboard  " + this.props.getParticipants)
         return (
             
             <Table>

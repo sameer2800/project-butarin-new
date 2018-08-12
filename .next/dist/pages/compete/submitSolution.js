@@ -114,7 +114,7 @@ var SubmitSolution = function (_Component) {
                                     userAddress: accounts[0]
 
                                 };
-                                url = "https://jsonplaceholder.typicode.com/posts";
+                                url = "http://localhost:9991/submit";
 
                                 console.log(postData);
 

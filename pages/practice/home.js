@@ -17,28 +17,24 @@ class PracticeIndex extends Component {
     static async getInitialProps () {
         const questionsListAddress =   await factory.methods.getDeployedQuestions().call() ;
 
-        var questionsDescriptions = [];
+        var questionsTitles = [];
         var questionsPrice =[];
         
         for(var i = 0; i < questionsListAddress.length; i++) {
             const question = GetQuestion(questionsListAddress[i]);
-            const description = await question.methods.getQuestionDescription().call();
-            questionsDescriptions.push(description);
-        }
-
-        for(var i = 0; i < questionsListAddress.length; i++) {
-            const question = GetQuestion(questionsListAddress[i]);
-            const balance = await question.methods.getBalance().call();
-            questionsPrice.push(balance);
+            const summaryDetails = await question.methods.getSummary().call();
+          //  const balance = await question.methods.getBalance().call();
+          questionsTitles.push(summaryDetails[1]);
+            questionsPrice.push(summaryDetails[3]);
         }
         
-        return {questionsListAddress, questionsDescriptions , questionsPrice }
+        return {questionsListAddress, questionsTitles , questionsPrice }
     }
 
 
     renderCampaigns = () => {
 
-        this.props.questionsDescriptions.map ( val => {
+        this.props.questionsTitles.map ( val => {
         //    console.log("question " + val);
         } )
 
@@ -57,7 +53,7 @@ class PracticeIndex extends Component {
         const items = filteredAddressIndexes.map((index) => {
             return{
                 key : index,
-                header : this.props.questionsDescriptions[index] ,
+                header : this.props.questionsTitles[index] ,
                 meta : "Prize Money: " + web3.utils.fromWei(this.props.questionsPrice[index], 'ether') + "  Ether",
                 description : ( 
                     <Link route={`/compete/${this.props.questionsListAddress[index]}`}>
