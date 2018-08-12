@@ -5,6 +5,6 @@ import web3 from './web3';
 import CampaginFactory from './build/onlineJudge.json';
 
 const instance = new web3.eth.Contract(JSON.parse(CampaginFactory.interface) ,
-    '0x6b2b2428f17cc6ebef27a4386affacf971f6b1ef');
+    '0xe78a0f7e598cc8b0bb87894b0f60dd2a88d6a8ab');
 
 export default instance;

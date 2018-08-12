@@ -69,9 +69,21 @@ class CampaignIndex extends Component {
             <Layout>
             <div>
                 <Image size='large' src={'http://localhost:9991/static/coding.svg'} fluid centered />
-                <h2>Live competetions</h2>
+                <h2>For Hackers</h2>
+                <p>
+                    <li>Learn to write the most efficent solidity code by practising on our Judge</li>
+                    <li>Compete with other hackers and earn Prize money and  hacker tokens</li>
+                    <li>Contribute back to the community by writing practise problems and weekly competetions.</li>
+                </p> 
 
-                <Link route="/compete/newproblem">
+                <h2>For Companies</h2>
+                <p>
+                    <li>Get your smart contract written by the world's most efficent solidity hackers</li>
+                    <li>Conduct hiring challeneges to hire the World's best Solidity hackers</li>
+                </p> 
+
+
+                <Link route="/compete/newproblem" >
                  <a>   
                 <Button  floated='right' content='Create Question' icon='add circle' primary />
                   </a>  

@@ -83,7 +83,7 @@ class CompeteIndex extends Component {
             <div>
                 
                 <h3>Open Competitions !!</h3>
-                <Image size='large' src={'http://localhost:9991/static/space.svg'} fluid centered />
+                <Image size='large' src={'http://localhost:9991/static/ether.svg'} fluid centered />
 
 
                 <Link route="/compete/newproblem">

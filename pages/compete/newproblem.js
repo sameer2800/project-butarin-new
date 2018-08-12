@@ -13,6 +13,7 @@ class NewProblem extends Component {
         description : '' ,
         publicKey : '' ,
         errorMsg : '' ,
+        testCases: '',
         loading : false
     }
 
@@ -75,15 +76,27 @@ class NewProblem extends Component {
                     />
                 </Form.Field>
 
+
+
                 <Form.Field>
-                    <label> Public key </label>
+                    <label> Encryption key (key for encrypting user submissions) </label>
                     <Input 
                         value = {this.state.publicKey}
                         onChange = {event => this.setState({publicKey : event.target.value})}
                     />
                 </Form.Field>
+
+
+                 <Form.Field>
+                    <label>Test cases code </label>
+                    <TextArea autoHeight placeholder='Try adding multiple lines'  value={this.state.testCases}
+                    onChange = { event => {this.setState({testCases : event.target.value}) }} 
+                    />
+                </Form.Field>
+
+
                 <Message error header="OOPS!!" content= {this.state.errorMsg}/>
-                <Button primary loading={this.state.loading}> Post Request</Button>
+                <Button primary loading={this.state.loading}>Submit Problem</Button>
             </Form>
 
               </Layout>
