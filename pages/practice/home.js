@@ -5,6 +5,7 @@ import Layout from '../../components/Layout';
 import {Link} from '../../routes';
 import GetQuestion from '../../ethereum/campaign';
 import web3 from '../../ethereum/web3';
+import { Image, Header, Icon } from 'semantic-ui-react'
 
 class PracticeIndex extends Component {
 
@@ -79,14 +80,16 @@ class PracticeIndex extends Component {
 
             <Layout>
             <div>
-                
-                <h3>Practice Competitions !!</h3>
+                <h3>Live Competetions</h3>
+                <Image size='large' src={'http://localhost:9991/static/space.svg'} fluid centered />
 
                 <Link route="/compete/newproblem">
                  <a>   
                 <Button  floated='right' content='Create Question' icon='add circle' primary />
                   </a>  
                 </Link>
+
+                <br />
 
                 {this.renderCampaigns()}
             </div>

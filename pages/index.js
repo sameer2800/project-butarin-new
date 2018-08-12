@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import {Link, Router} from '../routes';
 import GetQuestion from '../ethereum/campaign';
 import web3 from '../ethereum/web3';
+import { Header, Icon, Image } from 'semantic-ui-react'
 
 class CampaignIndex extends Component {
 
@@ -67,8 +68,8 @@ class CampaignIndex extends Component {
 
             <Layout>
             <div>
-                
-                <h3>Open Competitions !!</h3>
+                <Image size='large' src={'http://localhost:9991/static/coding.svg'} fluid centered />
+                <h2>Live competetions</h2>
 
                 <Link route="/compete/newproblem">
                  <a>   
